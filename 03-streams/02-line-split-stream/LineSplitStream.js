@@ -7,9 +7,14 @@ class LineSplitStream extends stream.Transform {
   }
 
   _transform(chunk, encoding, callback) {
+    chunk.forEach(el => {
+      console.log(el)
+    })
+    callback(null, chunk)
   }
 
   _flush(callback) {
+
   }
 }
 
