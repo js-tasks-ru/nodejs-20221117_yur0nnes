@@ -3,8 +3,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const LimitSizeStream = require('./LimitSizeStream');
-const { pipeline, Stream } = require('stream');
-const { resolveNaptr } = require('dns');
+
 
 const server = new http.Server();
 
@@ -21,12 +20,12 @@ server.on('request', (req, res) => {
       if (pathname.includes('/')) {
         res.statusCode = 400;
         res.end('Prohibited directory');
-        break;
+        return;
       } 
       if (fs.existsSync(filepath)) {
         res.statusCode = 409;
         res.end('File already exists');
-        break;
+        return;
       }
       const fileWrite = fs.createWriteStream(filepath);
       
@@ -45,6 +44,7 @@ server.on('request', (req, res) => {
       })
       
       req.on('aborted', () => {
+        fileWrite.end();
         limitedStream.destroy();
         fs.unlink(filepath, () => console.log('connection aborted'));
         res.end();
