@@ -7,13 +7,13 @@ app.use(require('koa-bodyparser')());
 
 const Router = require('koa-router');
 const router = new Router();
-const middle = require('./middleware/middleware')
+const {subscribe, publish} = require('./middleware/middleware').middle
 
-router.get('/subscribe', middle.subscribe, async (ctx, next) => {
+router.get('/subscribe', subscribe, async (ctx, next) => {
 
 });
 
-router.post('/publish', middle.publish, async (ctx, next) => {
+router.post('/publish', publish, async (ctx, next) => {
     
 });
 

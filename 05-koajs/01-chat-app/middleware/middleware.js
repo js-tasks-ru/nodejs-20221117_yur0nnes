@@ -23,4 +23,4 @@ const subscribe = async (ctx, next) => {
     return next()
 }
 
-module.exports = {publish, subscribe}
+module.exports.middle = {publish, subscribe}
