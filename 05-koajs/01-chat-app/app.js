@@ -9,13 +9,8 @@ const Router = require('koa-router');
 const router = new Router();
 const {subscribe, publish} = require('./middleware/middleware').middle
 
-router.get('/subscribe', subscribe, async (ctx, next) => {
-
-});
-
-router.post('/publish', publish, async (ctx, next) => {
-    
-});
+router.get('/subscribe', subscribe);
+router.post('/publish', publish); 
 
 app.use(router.routes());
 
