@@ -23,4 +23,3 @@ module.exports.productById = async function productById(ctx, next) {
   
   ctx.body = {product: mapProduct(products)};
 };
-
