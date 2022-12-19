@@ -1,6 +1,7 @@
 const url = require('url');
 const http = require('http');
 const path = require('path');
+const fs = require('fs')
 
 const server = new http.Server();
 
@@ -12,7 +13,18 @@ server.on('request', (req, res) => {
 
   switch (req.method) {
     case 'GET':
-
+      if (pathname.includes('/')) {
+        res.statusCode = 400;
+        res.end('Prohibited directory');
+        break;
+      }  
+      const stream = fs.createReadStream(filepath);
+      stream.pipe(res);
+      stream.on('error', (e) => {
+        res.statusCode = 404;
+        res.end('No such file');
+      });
+      req.on('aborted', () => stream.destroy());
       break;
 
     default:
