@@ -3,13 +3,13 @@ const mapProduct = require('../mappers/product')
 let mongoose = require('mongoose')
 
 module.exports.productsBySubcategory = async function productsBySubcategory(ctx, next) {
-
   const {subcategory} = ctx.query;
   if (!subcategory) return next();
-  const products = await Product.findById({subcategory}.subcategory)
+  const products = await Product.findOne({subcategory})
   if (!products) return ctx.body = {products: []}
 
-  ctx.body = {products: products.map(mapProduct)};
+  ctx.body = {products: [products].map(mapProduct)};
+
 };
 
 module.exports.productList = async function productList(ctx, next) {
